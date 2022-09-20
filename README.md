@@ -39,4 +39,4 @@ docker-compose exec web python manage.py loaddata dump.json
 127.0.0.1:8000/buy_order/{id} -  получение Stripe Session Id для оплаты выбранного Order
 ```
  - Документация к API: \
-[Swagger-ui](http://food-merk.sytes.net/swagger/)
+[Swagger-ui](http://127.0.0.1:8000/swagger/)
