@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    web:
+      build: ..
+      restart: always
+      volumes:
+        - static_value:/app/static/
+      ports:
+        - '0.0.0.0:8000:8000'
+      env_file:
+        - ./.env
+
+volumes:
+  static_value:
