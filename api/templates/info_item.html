@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <form action="/buy/{{ item.id }}" method="POST">
+    {% csrf_token %}
     <ul>
         <li>id: {{ item.id }}</li>
         <li>name: {{ item.name }}</li>

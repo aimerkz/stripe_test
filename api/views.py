@@ -29,7 +29,6 @@ def get_info_item(request, *args, **kwargs):
 def get_buy_id(request, *args, **kwargs):
     """Method for getting Stripe Session id for to pay for the selected Item"""
     item = Item.objects.get(id=kwargs['id'])
-    print(item)
     session = stripe.checkout.Session.create(
         line_items=[{
             'price_data': {
@@ -52,18 +51,19 @@ def get_buy_id(request, *args, **kwargs):
 @api_view(['GET', 'POST'])
 def get_buy_order(request, *args, **kwargs):
     """Method for getting Stripe Session id for to pay for the selected Order"""
-    items = Item.objects.filter()
-    print(items)
+    items = Item.objects.filter(items__id=kwargs['id'])
     line_items = []
     for item in items:
-        price_data = {'currency': 'usd',
-                      'product_data': {
-                        'name': item.name,
-                        'description': item.description},
-                      'unit_amount': item.price,
-                      'quantity': 1
-                      }
-        line_items.append(price_data)
+        line_items.append({
+            'price_data': {
+                'product_data': {
+                    'name': item.name,
+                },
+                'unit_amount': item.price,
+                'currency': 'usd',
+            },
+            'quantity': 1,
+        })
     session = stripe.checkout.Session.create(
         mode='payment',
         success_url=URL + '/success/',
@@ -74,8 +74,10 @@ def get_buy_order(request, *args, **kwargs):
 
 
 class SuccessView(TemplateView):
+    """The class to represent the template success.html"""
     template_name = 'success.html'
 
 
 class CancelView(TemplateView):
+    """The class to represent the template cancel.html"""
     template_name = 'cancel.html'

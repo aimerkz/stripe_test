@@ -1,5 +1,6 @@
-from django.core.validators import MinValueValidator
 from django.db import models
+from django.dispatch import receiver
+from django.db.models.signals import m2m_changed
 
 
 class Item(models.Model):
@@ -31,3 +32,14 @@ class Order(models.Model):
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
         ordering = ('-id', )
+
+
+@receiver(m2m_changed, sender=Order.items.through)
+def total_sum(sender, instance, action, **kwargs):
+    """Method to automatically calculate the total cost of all Items"""
+    if action == 'post_add':
+        total_sum = 0
+        for item in instance.items.all():
+            total_sum += item.price
+        instance.total_sum = total_sum
+        instance.save()
