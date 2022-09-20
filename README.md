@@ -30,7 +30,7 @@ docker-compose exec web python manage.py migrate
 ```
 - Заполните базу тестовыми данными:
 ```sh
-docker-compose exec web python manage.py loaddata dump.json
+docker-compose exec web python manage.py loaddata infra/dump.json
 ```
  - Список доступных маршрутов:
 ```sh
