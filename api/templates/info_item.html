@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="/buy/{{ item.id }}" method="POST">
+    <ul>
+        <li>id: {{ item.id }}</li>
+        <li>name: {{ item.name }}</li>
+        <li>description: {{ item.description }}
+        <li>price: {{ item.price }}$</li>
+        <br/>
+        <button type='submit'>Buy</button>
+    </ul>
+</form>
+{% endblock %}

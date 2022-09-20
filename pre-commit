@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if python3 -m flake8
+then
+	echo "flake8 has been finished successfully"
+else
+	echo "flake8 error"
+	exit -1
+fi
